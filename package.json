@@ -1,0 +1,28 @@
+{
+  "name": "hypercore-streams",
+  "version": "0.0.0",
+  "description": "External implementation of a WriteStream and ReadStream for Hypercore",
+  "main": "index.js",
+  "dependencies": {
+    "streamx": "^2.6.0"
+  },
+  "devDependencies": {
+    "hypercore": "^9.2.1",
+    "random-access-memory": "^3.1.1",
+    "standard": "^14.3.4",
+    "tape": "^5.0.1"
+  },
+  "scripts": {
+    "test": "standard && tape test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mafintosh/hypercore-streams.git"
+  },
+  "author": "Mathias Buus (@mafintosh)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mafintosh/hypercore-streams/issues"
+  },
+  "homepage": "https://github.com/mafintosh/hypercore-streams"
+}
