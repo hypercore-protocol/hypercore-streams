@@ -41,7 +41,7 @@ class ReadStream extends Readable {
     this.snapshot = opts.snapshot !== false
     this.tail = !!opts.tail
     this.index = this.start
-    this.options = { wait: opts.wait !== false, ifAvailable: !!opts.ifAvailable }
+    this.options = { wait: opts.wait !== false, ifAvailable: !!opts.ifAvailable, valueEncoding: opts.valueEncoding }
   }
 
   _open (cb) {

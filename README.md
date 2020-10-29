@@ -14,7 +14,8 @@ const { WriteStream, ReadStream } = require('hypercore-streams')
 const ws = new WriteStream(feed)
 const rs = new ReadStream(feed, {
   start: 0,
-  live: true
+  live: true,
+  valueEncoding: 'json'
 })
 ```
 
