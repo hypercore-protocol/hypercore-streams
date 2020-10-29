@@ -52,7 +52,7 @@ class ReadStream extends Readable {
         else if (this.snapshot) this.end = this.feed.length
         if (this.start > this.end) this.push(null)
       }
-      if (this.tail) this.start = this.length
+      if (this.tail) this.start = this.feed.length
       this.index = this.start
       cb(null)
     })

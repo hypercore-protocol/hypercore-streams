@@ -19,6 +19,28 @@ tape('basic readstream', function (t) {
   })
 })
 
+tape('tail reading stream', function (t) {
+  const feed = hypercore(ram)
+  t.plan(2)
+
+  feed.append(['a', 'b', 'c'], function () {
+    const rs = new ReadStream(feed, { tail: true, live: true })
+    const expected = ['d', 'e']
+
+    rs.on('data', function (data) {
+      t.same(data, Buffer.from(expected.shift()))
+    })
+
+    feed.ready(function () {
+      feed.append(['d', 'e'])
+    })
+
+    rs.on('end', function () {
+      t.fail('should not end')
+    })
+  })
+})
+
 tape('live readstream', function (t) {
   t.plan(2)
 
