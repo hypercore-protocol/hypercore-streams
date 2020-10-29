@@ -69,3 +69,19 @@ tape('basic writestream', function (t) {
     })
   })
 })
+
+tape('valueEncoding test', function (t) {
+  const feed = hypercore(ram, { valueEncoding: 'json' })
+
+  feed.append(['a', 'b', 'c'], function () {
+    const rs = new ReadStream(feed, { valueEncoding: 'buffer' })
+    const expected = ['a', 'b', 'c']
+
+    rs.on('data', function (data) {
+      t.same(data, Buffer.from('"' + expected.shift() + '"\n'))
+    })
+    rs.on('end', function () {
+      t.end()
+    })
+  })
+})
