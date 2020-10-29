@@ -1,6 +1,6 @@
 {
   "name": "hypercore-streams",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "External implementation of a WriteStream and ReadStream for Hypercore",
   "main": "index.js",
   "dependencies": {
