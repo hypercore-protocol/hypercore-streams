@@ -18,12 +18,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mafintosh/hypercore-streams.git"
+    "url": "https://github.com/hypercore-protocol/hypercore-streams.git"
   },
   "author": "Mathias Buus (@mafintosh)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mafintosh/hypercore-streams/issues"
+    "url": "https://github.com/hypercore-protocol/hypercore-streams/issues"
   },
-  "homepage": "https://github.com/mafintosh/hypercore-streams"
+  "homepage": "https://github.com/hypercore-protocol/hypercore-streams"
 }
