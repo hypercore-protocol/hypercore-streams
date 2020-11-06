@@ -42,6 +42,7 @@ class ReadStream extends Readable {
     this.tail = !!opts.tail
     this.index = this.start
     this.options = { wait: opts.wait !== false, ifAvailable: !!opts.ifAvailable, valueEncoding: opts.valueEncoding }
+    this.batch = opts.batch || 1
   }
 
   _open (cb) {
@@ -62,6 +63,21 @@ class ReadStream extends Readable {
     if (this.index === this.end || (this.end === -1 && this.index >= this.feed.length)) {
       this.push(null)
       return cb(null)
+    }
+    if (this.batch > 1) {
+      const batchStart = this.index
+      const batchEnd = Math.min(batchStart + this.batch, this.end, this.feed.length)
+      if (batchStart < batchEnd) {
+        this.index = batchEnd
+        this.feed.getBatch(batchStart, batchEnd, this.options, (err, blocks) => {
+          if (err) return cb(err)
+          for (const block of blocks) {
+            this.push(block)
+          }
+          cb(null)
+        })
+        return
+      }
     }
     this.feed.get(this.index++, this.options, (err, block) => {
       if (err) return cb(err)
