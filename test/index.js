@@ -222,6 +222,32 @@ tape('writes are batched', function (t) {
   })
 })
 
+tape('reads are batched', function (t) {
+  const feed = hypercore(ram)
+  const _getBatch = feed.getBatch
+  const batchCalls = []
+  feed.getBatch = function (start, end, opts) {
+    batchCalls.push({ start, end, opts })
+    return _getBatch.apply(feed, arguments)
+  }
+
+  feed.append(['a', 'b', 'c'], function () {
+    const rs = new ReadStream(feed, { batch: 2 })
+    const expected = ['a', 'b', 'c']
+
+    rs.on('data', function (data) {
+      t.same(data, Buffer.from(expected.shift()))
+    })
+    rs.on('end', function () {
+      t.deepEquals(batchCalls, [
+        { start: 0, end: 2, opts: { wait: true, ifAvailable: false, valueEncoding: undefined } },
+        { start: 2, end: 3, opts: { wait: true, ifAvailable: false, valueEncoding: undefined } }
+      ])
+      t.end()
+    })
+  })
+})
+
 tape('value encoding read-stream', function (t) {
   const feed = hypercore(ram, { valueEncoding: 'json' })
 
